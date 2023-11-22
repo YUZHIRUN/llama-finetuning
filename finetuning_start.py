@@ -15,7 +15,7 @@ from data.concatenator import ConcatDataset
 
 def start_train(**kwargs):
     train_config = tc.TrainCfg()
-    cfg_tools.update_config(train_config)
+    cfg_tools.update_config(train_config, **kwargs)
     torch.cuda.manual_seed(train_config.seed)
     torch.manual_seed(train_config.seed)
     random.seed(train_config.seed)

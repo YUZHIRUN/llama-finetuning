@@ -20,6 +20,7 @@ class TrainCfg:
     val_batch_size: int = 1
     dataset = "custom_dataset"
     peft_method: str = "lora"
+    enable_fsdp: bool = False
     use_peft: bool = False
     output_dir: str = "user-defined"
     freeze_layers: bool = False
