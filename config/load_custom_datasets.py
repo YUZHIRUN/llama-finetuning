@@ -4,7 +4,6 @@ import datasets
 # This function need to be refactored according to the formats of  datasets.
 def get_datasets(dataset_config, tokenizer, split):
     dataset = datasets.load_dataset(dataset_config.path, split=split)
-
     prompt = (
         f"Summarize this dialog:\n{{dialog}}\n---\nSummary:\n"
     )
