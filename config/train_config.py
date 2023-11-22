@@ -21,11 +21,11 @@ class TrainCfg:
     dataset = "custom_dataset"
     peft_method: str = "lora"
     enable_fsdp: bool = False
-    use_peft: bool = False
+    use_peft: bool = True
     output_dir: str = "user-defined"
     freeze_layers: bool = False
     num_freeze_layers: int = 1
-    quantization: bool = False
+    quantization: bool = True
     one_gpu: bool = False
     save_model: bool = True
     dist_checkpoint_root_folder: str = "user-defined"
