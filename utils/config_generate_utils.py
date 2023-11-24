@@ -1,4 +1,4 @@
-from config import train_config
+from config import fine_tuning_config as ft_config
 from config import peft_info
 from config import datasets_info
 from dataclasses import asdict
@@ -27,20 +27,16 @@ def update_config(config, **kwargs):
                     else:
                         # In case of specialized config we can warm user
                         print(f"Warning: {config_name} does not accept parameter: {k}")
-            elif isinstance(config, train_config.TrainCfg):
+            elif isinstance(config, ft_config.TrainCfg):
                 print(f"Warning: unknown parameter {k}")
 
 
-def generate_peft_config(train_config, kwargs):
+def generate_peft_config(train_config):
     configs = (peft_info.lora_config, peft_info.llama_adapter_config, peft_info.prefix_config)
     peft_configs = (LoraConfig, AdaptionPromptConfig, PrefixTuningConfig)
     names = tuple(c.__name__.rstrip("_config") for c in configs)
-
     assert train_config.peft_method in names, f"Peft config not found: {train_config.peft_method}"
-
     config = configs[names.index(train_config.peft_method)]()
-
-    update_config(config, **kwargs)
     params = asdict(config)
     peft_config = peft_configs[names.index(train_config.peft_method)](**params)
 
@@ -86,7 +82,8 @@ def get_dataloader_kwargs(train_config, dataset, tokenizer, mode):
     return kwargs
 
 
-def print_model_size(model, config) -> None:
-    print(f"--> Model {config.model_name}")
-    total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    print(f"\n--> {config.model_name} has {total_params / 1e6} Million params\n")
+def print_model_size(model, config, rank: int = 0) -> None:
+    if rank == 0:
+        print(f"--> Model {config.model_name}")
+        total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+        print(f"\n--> {config.model_name} has {total_params / 1e6} Million params\n")
