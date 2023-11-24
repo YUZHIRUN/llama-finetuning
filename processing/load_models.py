@@ -8,7 +8,7 @@ import peft
 def load_llama_integrate(config: fine_tuning_config.TrainCfg):
     use_cache = False if config.enable_fsdp else None
     is_load_8bit = True if config.quantization else None
-    is_device_auto = True if config.quantization else None
+    is_device_auto = 'auto' if config.quantization else None
     model = LlamaForCausalLM.from_pretrained(config.model_name, load_in_8bit=is_load_8bit, device_map=is_device_auto,
                                              use_cache=use_cache)
     return model
