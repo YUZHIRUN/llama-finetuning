@@ -7,7 +7,6 @@ import yaml
 from contextlib import nullcontext
 from pathlib import Path
 from pkg_resources import packaging
-
 import torch
 import torch.cuda.nccl as nccl
 import torch.distributed as dist
@@ -15,9 +14,7 @@ from torch.distributed.fsdp import StateDictType
 from torch.distributed.fsdp.sharded_grad_scaler import ShardedGradScaler
 from tqdm import tqdm
 from transformers import LlamaTokenizer
-
-from model_checkpointing import save_model_checkpoint, save_model_and_optimizer_sharded, \
-    save_optimizer_checkpoint
+from model_checkpointing import save_model_checkpoint, save_model_and_optimizer_sharded, save_optimizer_checkpoint
 from policies import fpSixteen, bfSixteen, get_llama_wrapper
 from utils.memory_utils import MemoryTrace
 
