@@ -1,0 +1,13 @@
+requests
+peft
+gradio==3.50.2
+protobuf
+torch_grammar
+markdown
+datasets
+bitsandbytes
+transformers
+fire
+scipy
+# cuda version 12.0 torch
+torch --find-links https://download.pytorch.org/whl/cu118
