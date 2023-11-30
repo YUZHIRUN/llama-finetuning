@@ -4,8 +4,9 @@ import utils
 from torch.utils.data import DataLoader
 
 
-def get_datasets_loader(train_config: config.TrainCfg, tokenizer, rank=0):
+def get_datasets_loader(train_config: config.TrainCfg, tokenizer, rank=0, **kwargs):
     dataset_config = config.custom_dataset()
+    utils.update_config(dataset_config, **kwargs)
     train_dataset = config.get_datasets(dataset_config, tokenizer, split='train')
     if train_config.enable_fsdp or rank == 0:
         print(f"--> Training Set Length = {len(train_dataset)}")

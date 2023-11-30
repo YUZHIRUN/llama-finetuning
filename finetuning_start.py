@@ -21,7 +21,7 @@ def start_train(**kwargs):
         model.to(torch.bfloat16)
     model = load_llama_mode_use_peft(model, train_config)
     model = fsdp_wrap(model, (train_config, fsdp_config), rank)
-    train_dataset_loader, test_dataset_loader = get_datasets_loader(train_config, tokenizer, rank)
+    train_dataset_loader, test_dataset_loader = get_datasets_loader(train_config, tokenizer, rank, **kwargs)
     if fsdp_config.pure_bf16 and fsdp_config.optimizer == 'anyprecision':
         optimizer = AnyPrecisionAdamW(
             model.parameters(),
